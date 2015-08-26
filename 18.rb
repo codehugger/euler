@@ -1,4 +1,4 @@
-pyramid = [
+PYRAMID = [
                               [75],
                             [95, 64],
                           [17, 47, 82],
@@ -27,14 +27,29 @@ class Node
     @right = right
   end
 
-  def self.parse_nodes(nodes)
-    nodes.map { |e| self.new(val=e) }
-  end
-
-  def self.parse_tree(tree)
-    return nil if tree.is_empty?
-    return root
+  def to_s
+    val
   end
 end
 
-p Node.parse_nodes(pyramid[3])
+def parse_tree(row_index, col_index)
+  return nil if row_index + 1 > PYRAMID.length
+
+  root = Node.new(
+    PYRAMID[row_index][col_index],
+    parse_tree(row_index+1, col_index),
+    parse_tree(row_index+1, col_index+1))
+
+  return root
+end
+
+def traverse_tree(root)
+  return 0 if root.nil?
+
+  left_sum = root.val + traverse_tree(root.left)
+  right_sum = root.val + traverse_tree(root.right)
+
+  return [left_sum, right_sum].max
+end
+
+puts traverse_tree(parse_tree(0, 0))
