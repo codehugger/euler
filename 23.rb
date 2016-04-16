@@ -33,6 +33,15 @@ def abundant(n)
   sum_of_proper_divisors(n) > n
 end
 
+abundantnumbers = []
+28123.times.each do |n|
+  abundantnumbers << n+1 if abundant(n+1)
+end
+
+abundantnumbers.each do |number|
+  
+end
+
 puts "Perfect 28: #{perfect_number(28)}"
 puts "Perfect 13: #{perfect_number(13)}"
 puts "Abundant 12: #{abundant(12)}"
